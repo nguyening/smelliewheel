@@ -19,3 +19,16 @@ String.prototype.hashCode = function(){
 Number.prototype.mod = function(n) {
 	return ((this%n)+n)%n;
 }
+
+$.fn.wysiwygEvt = function () {
+    return this.each(function () {
+        var $this = $(this);
+        var htmlold = $this.html();
+        $this.bind('blur keyup paste copy cut mouseup', function () {
+            var htmlnew = $this.html();
+            if (htmlold !== htmlnew) {
+                $this.trigger('change')
+            }
+        })
+    })
+}

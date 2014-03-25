@@ -2,7 +2,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>SmellieTV Giveaway Wheel</title>
-	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
 	<div id="info">
@@ -13,142 +13,26 @@
 
 	<div id="wheel">
 		<canvas id="canvas" width="1000" height="600"></canvas>
+		<div id="stack"></div>
 	</div>
 	
 	<div id="stats">
-		<div id="stack"></div>
+		
 	</div>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-	<script src="helpers.js"></script>
-	<script src="contenteditable_change.js"></script>
-	<script src="wheel.js"></script>
-	<script src="game.js"></script>
+	<script src="js/helpers.js"></script>
+	<script src="js/contenteditable_change.js"></script>
+	
+	<script src="js/wheel.js"></script>
+	<script src="js/game/game.js"></script>
+
 	<script type="text/javascript">
-		var state = {
-			points: 0,
-			rolls: 0 ,
-			donate: 0,
-		}, oldState = $.extend(true, {}, state);
-
-		var lastAction = -1;
-
-		var updateState = function () {
-			$('#rolls').text(state.rolls);
-			$('#points').text(state.points);
-			$('#donate').text(state.donate);
-		};
-
-		$('#info div').change(function () {
-			state.points = parseInt($('#points').text()) || 0;
-			state.rolls = parseInt($('#rolls').text()) || 0;
-			state.donate = parseInt($('#donate').text()) || 0;
-		});
-
-		window.onload = function() {
-			wheel.init();
-			updateState();
-			$('#info div').wysiwygEvt();
-
-			segments = [
-				{ label: "+1", functor: 0},
-				{ label: "+1", functor: 0},
-				{ label: "+1", functor: 0},
-				{ label: "+1", functor: 0},
-				{ label: "+1", functor: 0},
-				{ label: "+1", functor: 0},
-				{ label: "+2", functor: 0},
-				{ label: "+2", functor: 0},
-				{ label: "+2", functor: 0},
-				{ label: "+2", functor: 0},
-				{ label: "+2", functor: 0},
-				{ label: "+3", functor: 0},
-				{ label: "+5", functor: 0},
-				{ label: "+5", functor: 0},
-				{ label: "+5", functor: 0},
-				{ label: "+5", functor: 0},
-				{ label: "-1", functor: 0},
-				{ label: "-1", functor: 0},
-				{ label: "-1", functor: 0},
-				{ label: "-1", functor: 0},
-				{ label: "-2", functor: 0},
-				{ label: "-2", functor: 0},
-				{ label: "-2", functor: 0},
-				{ label: "-2", functor: 0},
-				{ label: "-2", functor: 0},
-				{ label: "-2", functor: 0},
-				{ label: "-2", functor: 0},
-				{ label: "-2", functor: 0},
-				{ label: "-3", functor: 0},
-				{ label: "-3", functor: 0},
-				{ label: "-3", functor: 0},
-				{ label: "-3", functor: 0},
-				{ label: "-3", functor: 0},
-				{ label: "-5", functor: 0},
-				{ label: "-5", functor: 0},
-				{ label: "-5", functor: 0},
-				{ label: "Back to 0!", functor: 1},
-				{ label: "Back to 0!", functor: 1},
-				{ label: "Donate 1 to next guy!", functor: 2},
-				{ label: "Double Previous!", functor: 3},
-				{ label: "Double Previous!", functor: 3},
-				{ label: "Gain 2 rolls!", functor: 4},
-				{ label: "Gain 2 rolls!", functor: 4},
-				{ label: "Gain a Roll!", functor: 5},
-				{ label: "Gain a Roll!", functor: 5},
-				{ label: "Lose a Roll!", functor: 6},
-				{ label: "Negate Previous!", functor: 7},
-				{ label: "Negate Previous!", functor: 7},
-			];
-
-			segments.shuffle();
-
-			segment_functions = [function (val) {
-				state.points += parseInt(val);
-				if(state.points < 0)
-					state.points = 0;
-			}, function () {		// 1
-				state.points = 0;
-			}, function () {		// 2
-				state.donate += 1;
-			}, function () {		// 3
-				segment = segments[lastAction];
-				segment_functions[segment.functor].call(undefined, segment.label);
-				segment_functions[segment.functor].call(undefined, segment.label);
-			}, function () {		// 4
-				state.rolls += 2;
-			}, function () {		// 5
-				state.rolls += 1;
-			}, function () {		// 6
-				state.rolls -= 1;
-			}, function () {		// 7
-				var temp = $.extend(true, {}, state);
-				state = oldState;
-				oldState = temp;
-			}]
-
-			wheel.segments = $.map(segments, function (el) {
-				return el.label;
-			});
-			wheel.update();
-
-			$(document).on('wheel_finished', function (e, data) {
-				if(segments[data.segment].functor != 7)
-					oldState = $.extend(true, {}, state);
-
-				$('#stack').append('<p>'+segments[data.segment].label+'</p>');
-				segment = segments[data.segment];
-				segment_functions[segment.functor].call(undefined, segment.label);
-
-				state.rolls -= 1;
-				oldState.rolls -= 1;
-
-				if(segments[data.segment].functor != 3)
-					lastAction = data.segment;
-
-				updateState();
-			});
-		}
+	window.onload = function() {
+		wheel.init();
+		game = new Game();
+		updateState();
+	};
 	</script>
 </body>
 </html>

@@ -21,3 +21,18 @@ div#donate {
 	content: 'ROLLS';
 	font-weight: bold;
 }
+
+#stack {
+	display: inline-block;
+	vertical-align: top;
+	font-size: .75em;
+}
+
+#stack:before {
+	content: 'LOG';
+	font-size: 3em;
+}
+
+#stack p {
+	margin: 0;
+}
