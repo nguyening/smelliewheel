@@ -43,6 +43,15 @@ var Game = function (wheel) {
 		$('#donate').text(state.donate);
 	};
 
+	// PUBLIC FUNCS
+	this.resetState = function () {
+		state.points = 0;
+		state.rolls = 0;
+		state.donate = 0;
+		$('#stack').empty();
+		updateState();
+	};
+
 	// EVENT HANDLERS
 
 	$('#info div').change(function () {
@@ -72,5 +81,7 @@ var Game = function (wheel) {
 			lastAction = data.segment;
 
 		updateState();
+		if(state.rolls > 0)
+			setTimeout(wheel.spin, 1000);
 	});
 };

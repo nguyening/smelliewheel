@@ -1,5 +1,5 @@
 var settings = {
-	this.segments = [
+	segments : [
 		{ label: "+1", functor: 0},
 		{ label: "+1", functor: 0},
 		{ label: "+1", functor: 0},
@@ -48,5 +48,7 @@ var settings = {
 		{ label: "Lose a Roll!", functor: 6},
 		{ label: "Negate Previous!", functor: 7},
 		{ label: "Negate Previous!", functor: 7},
-	];
+	],
 };
+
+exports.Settings = settings;
