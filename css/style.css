@@ -1,0 +1,36 @@
+#info div {
+	display: inline-block;
+	font-size: 3em;
+	padding-right: 1em;
+}
+
+div#donate {
+	display: none;
+}
+
+#donate:after {
+	content: ' rolls to next player!';
+}
+
+#points:after {
+	content: 'POINTS';
+	font-weight: bold;
+}
+
+#rolls:after {
+	content: 'ROLLS';
+	font-weight: bold;
+}
+
+#side_pane {
+	display: inline-block;
+	vertical-align: top;
+}
+
+#stack {
+	font-size: .75em;
+}
+
+#stack p {
+	margin: 0;
+}

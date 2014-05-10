@@ -1,0 +1,48 @@
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>SmellieTV Giveaway Wheel</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+	<div id="info">
+		<div id="rolls" type="number" contenteditable></div>
+		<div id="points" type="number" contenteditable></div>
+		<div id="donate" type="number" contenteditable></div>
+	</div>
+
+	<div id="wheel">
+		<canvas id="canvas" width="1000" height="600"></canvas>
+		<div id="side_pane">
+			<h1 style="display: inline">Log</h1>
+			<button id="reset">Reset</button>
+			<div id="stack"></div>
+		</div>
+	</div>
+	
+	<div id="stats">
+		
+	</div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script src="js/require.min.js"></script>
+	<script src="js/helpers.js"></script>
+	<script src="js/contenteditable_change.js"></script>
+	
+	<script src="js/wheel.js"></script>
+	<script src="js/game/game.js"></script>
+
+	<script type="text/javascript">
+	window.onload = function() {
+		wheel.init();
+		game = new Game(wheel);
+		game.resetState();
+	};
+
+	$('#reset').click(function (evt) {
+		evt.preventDefault();
+		game.resetState();
+	})
+	</script>
+</body>
+</html>
