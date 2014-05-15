@@ -13,7 +13,8 @@ var Game = function (wheel) {
 	segments.shuffle();
 
 	var segment_functions = [function (val) {
-		state.points += parseInt(val);
+		var add = parseInt(val) || 0;
+		state.points += add;
 		if(state.points < 0)
 			state.points = 0;
 	}, function () {		// 1
